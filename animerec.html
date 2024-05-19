@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Recommendation</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="animerec.css">
+</head>
+<body>
+    <header>
+        <h1>Anime Recommendation</h1>
+        <nav>
+            <ul>
+                <li><a href="animerec.html">Home</a></li>
+                <li><a href="search.html">Search Anime</a></li> <!-- Link to the search page -->
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <button>Login</button>
+    </header>
+    
+    <main>
+        <form id="animeSearchForm">
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" name="genre">
+            
+            <label for="minScore">Minimum Score:</label>
+            <input type="number" id="minScore" name="minScore" min="0" max="10">
+            
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="">Any</option>
+                <option value="airing">Airing</option>
+                <option value="completed">Completed</option>
+                <option value="upcoming">Upcoming</option>
+            </select>
+            
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="results">
+            <!-- Anime recommendation cards will be displayed here -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Anime Recommendation</p>
+        <ul>
+        <li><a href="https://www.facebook.com/OfficialMyAnimeList/" target="_blank">Facebook</a></li>
+        <li><a href="https://www.instagram.com/myanimelistofficial/?hl=en" target="_blank">Instagram</a></li>
+        <li><a href="https://x.com/myanimelist?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor&mx=2" target="_blank">Twitter</a></li>
+        </ul>
+        <p>Contact us: contact@animerecommendation.com</p>
+    </footer>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="animerec.js"></script>
+</body>
+</html>

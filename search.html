@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Search</title>
+    <link rel="stylesheet" href="animerec.css">
+</head>
+<body>
+<header>
+    <h1>Anime Search</h1>
+    <nav>
+        <ul>
+            <li><a href="animerec.html">Home</a></li>
+            <li><a href="search.html">Search Anime</a></li> <!-- Link to the search page -->
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+</header>
+    
+    <main>
+        <form id="search-form">
+            <input type="text" id="search-input" placeholder="Search for anime...">
+            <button type="submit">Search</button>
+        </form>
+        
+        <div id="search-results">
+            <!-- Search results will be displayed here -->
+        </div>
+    </main>
+
+    <footer>
+        <!-- Footer content here -->
+    </footer>
+
+    <script>
+        // JavaScript code for Search page
+
+        const searchForm = document.getElementById("search-form");
+        const searchInput = document.getElementById("search-input");
+        const searchResults = document.getElementById("search-results");
+
+        searchForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const searchString = searchInput.value.trim(); // Trim whitespace
+
+            try {
+                const res = await fetch(`https://api.jikan.moe/v3/search/anime?q=${searchString}`);
+                const data = await res.json();
+
+                // Clear previous search results
+                searchResults.innerHTML = "";
+
+                // Display search results
+                if (data.results.length === 0) {
+                    searchResults.innerHTML = "<p>No results found.</p>";
+                } else {
+                    data.results.forEach(anime => {
+                        const animeElement = document.createElement("div");
+                        animeElement.classList.add("anime-item");
+                        animeElement.innerHTML = `
+                            <img src="${anime.image_url}" alt="${anime.title}">
+                            <div class="anime-info">
+                                <h3>${anime.title}</h3>
+                                <p>${anime.synopsis}</p>
+                            </div>
+                        `;
+                        searchResults.appendChild(animeElement);
+                    });
+                }
+            } catch (err) {
+                console.error("Error searching anime:", err);
+                // Display error message on the page
+                searchResults.innerHTML = "<p>An error occurred while searching anime.</p>";
+            }
+        });
+    </script>
+</body>
+</html>
