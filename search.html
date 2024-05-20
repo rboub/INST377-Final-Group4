@@ -2,9 +2,20 @@
     <head>
     <title>Anime Search</title>
     <link rel="stylesheet" href="animerec.css">
+    <style>
+        /* Navigation button styling. */
+        #prev-btn, #next-btn {
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+    </style>
     </head>
     <body>
-        <header>
         <h1>Anime Search</h1>
         <nav>
             <ul>
@@ -12,9 +23,7 @@
                 <li><a href="search.html">Search Anime</a></li> <!-- Link to the search page -->
                 <li><a href="about.html">About</a></li>
             </ul>
-        </nav>
-        </header>
-        <form id="search-form">
+        </nav> <!-- Initializing a search form with an associated button. -->
             <label for="search-input">Search for anime:</label>
             <input type="text" id="search-input" placeholder="e.g. Naruto">
             <button type="submit">Search</button>
@@ -27,18 +36,24 @@
             <p id="anime-synopsis"></p>
         </div>
 
-        <footer>
+        <!-- Initializes previous and next buttons for navigating results. -->
+        <button id="prev-btn">Previous</button>
+        <button id="next-btn">Next</button>
+
+        <footer> <!--Footer with related information.-->
             <p>&copy; 2024 Anime Recommendation</p>
             <ul>
             <li><a href="https://www.facebook.com/OfficialMyAnimeList/" target="_blank">Facebook</a></li>
             <li><a href="https://www.instagram.com/myanimelistofficial/?hl=en" target="_blank">Instagram</a></li>
-            <li><a href="https://x.com/myanimelist?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor&mx=2" target="_blank">Twitter</a></li>
+            <li><a href="https://x.com/myanimelist?ref_src=twsrc%5Egoogle%7Ctwcamp%5Es...">Twitter</a></li>
             </ul>
             <p>Contact us: contact@animerecommendation.com</p>
         </footer>
-
+        
         <script src="https://rawgit.com/ruyadorno/simple-slider/master/dist/simpleslider.min.js"></script>
         <script>
+            // This script handles anime search functionality by listening for form submissions
+            // and sending a request to Jikan API for an anime search based on user input.
             document.getElementById('search-form').addEventListener('submit', async function(event) {
                 event.preventDefault();
                 
@@ -47,6 +62,8 @@
                 const animeInfo = document.getElementById('anime-info');
                 const animeTitle = document.getElementById('anime-title');
                 const animeSynopsis = document.getElementById('anime-synopsis');
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
                 sliderContainer.innerHTML = '';
                 animeInfo.style.display = 'none';
     
@@ -74,7 +91,8 @@
                             sliderContainer.appendChild(animeItem);
                         });
     
-                        // Initialize the Simple Slider
+                        // Initialize the Simple Slider functionality for the results.
+                        // This makes the results automatically scroll every 3 seconds.
                         const slider = simpleslider.getSlider({
                             container: sliderContainer,
                             children: sliderContainer.children,
@@ -90,8 +108,16 @@
                                 animeInfo.style.display = 'block';
                             }
                         });
-    
-                        // Set initial anime info
+
+                        // Add event listeners to previous and next buttons.
+                        prevBtn.addEventListener('click', () => {
+                            slider.prev();
+                        });
+                        nextBtn.addEventListener('click', () => {
+                            slider.next();
+                        });
+
+                        // Sets initial anime info.
                         const firstAnime = sliderContainer.children[0];
                         animeTitle.innerText = firstAnime.dataset.title;
                         animeSynopsis.innerText = firstAnime.dataset.synopsis;
@@ -107,4 +133,3 @@
         </script>
     </body>
     
-</html>
