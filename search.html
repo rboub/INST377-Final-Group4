@@ -1,5 +1,6 @@
+<!DOCTYPE html>
 <html>
-    <head>
+<head>
     <title>Anime Search</title>
     <link rel="stylesheet" href="animerec.css">
     <style>
@@ -14,122 +15,129 @@
             margin-right: 10px;
         }
     </style>
-    </head>
-    <body>
-        <h1>Anime Search</h1>
-        <nav>
-            <ul>
-                <li><a href="animerec.html">Home</a></li>
-                <li><a href="search.html">Search Anime</a></li> <!-- Link to the search page -->
-                <li><a href="about.html">About</a></li>
-            </ul>
-        </nav> <!-- Initializing a search form with an associated button. -->
-            <label for="search-input">Search for anime:</label>
-            <input type="text" id="search-input" placeholder="e.g. Naruto">
-            <button type="submit">Search</button>
-        </form>
-        <div id="slider-container" class="slider" data-simple-slider>
-            <!-- Search results will be appended here -->
-        </div>
-        <div id="anime-info" class="anime-info" style="display: none;">
-            <h3 id="anime-title"></h3>
-            <p id="anime-synopsis"></p>
-        </div>
+</head>
+<body>
+<header>
+    <h1>Anime Search</h1>
+    <nav>
+        <ul>
+            <li><a href="animerec.html">Home</a></li>
+            <li><a href="search.html">Search Anime</a></li> <!-- Link to the search page -->
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+</header>
 
-        <!-- Initializes previous and next buttons for navigating results. -->
-        <button id="prev-btn">Previous</button>
-        <button id="next-btn">Next</button>
+<main>
+    <form id="search-form"> <!-- Adding the form element with id "search-form" -->
+        <!-- Initializing a search form with an associated button. -->
+        <label for="search-input">Search for anime:</label>
+        <input type="text" id="search-input" placeholder="e.g. Naruto">
+        <button type="submit">Search</button>
+    </form>
+    <div id="slider-container" class="slider" data-simple-slider>
+        <!-- Search results will be appended here -->
+    </div>
+    <div id="anime-info" class="anime-info" style="display: none;">
+        <h3 id="anime-title"></h3>
+        <p id="anime-synopsis"></p>
+    </div>
 
-        <footer> <!--Footer with related information.-->
-            <p>&copy; 2024 Anime Recommendation</p>
-            <ul>
-            <li><a href="https://www.facebook.com/OfficialMyAnimeList/" target="_blank">Facebook</a></li>
-            <li><a href="https://www.instagram.com/myanimelistofficial/?hl=en" target="_blank">Instagram</a></li>
-            <li><a href="https://x.com/myanimelist?ref_src=twsrc%5Egoogle%7Ctwcamp%5Es...">Twitter</a></li>
-            </ul>
-            <p>Contact us: contact@animerecommendation.com</p>
-        </footer>
+    <!-- Initializes previous and next buttons for navigating results. -->
+    <button id="prev-btn">Previous</button>
+    <button id="next-btn">Next</button>
+</main>
+
+<footer> <!--Footer with related information.-->
+    <p>&copy; 2024 Anime Recommendation</p>
+    <ul>
+        <li><a href="https://www.facebook.com/OfficialMyAnimeList/" target="_blank">Facebook</a></li>
+        <li><a href="https://www.instagram.com/myanimelistofficial/?hl=en" target="_blank">Instagram</a></li>
+        <li><a href="https://x.com/myanimelist?ref_src=twsrc%5Egoogle%7Ctwcamp%5Es...">Twitter</a></li>
+    </ul>
+    <p>Contact us: contact@animerecommendation.com</p>
+</footer>
+
+<script src="https://rawgit.com/ruyadorno/simple-slider/master/dist/simpleslider.min.js"></script>
+<script>
+    // This script handles anime search functionality by listening for form submissions
+    // and sending a request to Jikan API for an anime search based on user input.
+    document.getElementById('search-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
         
-        <script src="https://rawgit.com/ruyadorno/simple-slider/master/dist/simpleslider.min.js"></script>
-        <script>
-            // This script handles anime search functionality by listening for form submissions
-            // and sending a request to Jikan API for an anime search based on user input.
-            document.getElementById('search-form').addEventListener('submit', async function(event) {
-                event.preventDefault();
-                
-                const searchInput = document.getElementById('search-input').value.trim();
-                const sliderContainer = document.getElementById('slider-container');
-                const animeInfo = document.getElementById('anime-info');
-                const animeTitle = document.getElementById('anime-title');
-                const animeSynopsis = document.getElementById('anime-synopsis');
-                const prevBtn = document.getElementById('prev-btn');
-                const nextBtn = document.getElementById('next-btn');
-                sliderContainer.innerHTML = '';
-                animeInfo.style.display = 'none';
-    
-                if (!searchInput) {
-                    sliderContainer.innerHTML = '<p>Please enter a search term.</p>';
-                    return;
-                }
-    
-                try {
-                    const response = await fetch(`https://api.jikan.moe/v4/anime?q=${searchInput}&limit=9`);
-                    const data = await response.json();
-    
-                    if (data.data && data.data.length > 0) {
-                        data.data.forEach((anime, index) => {
-                            const animeItem = document.createElement('img');
-                            animeItem.src = anime.images.jpg.image_url;
-                            animeItem.alt = anime.title;
-                            animeItem.onclick = () => {
-                                window.open(`https://myanimelist.net/anime/${anime.mal_id}`, '_blank');
-                            };
-                            animeItem.dataset.index = index;
-                            animeItem.dataset.title = anime.title;
-                            animeItem.dataset.synopsis = anime.synopsis || 'No synopsis available.';
-    
-                            sliderContainer.appendChild(animeItem);
-                        });
-    
-                        // Initialize the Simple Slider functionality for the results.
-                        // This makes the results automatically scroll every 3 seconds.
-                        const slider = simpleslider.getSlider({
-                            container: sliderContainer,
-                            children: sliderContainer.children,
-                            duration: 1,
-                            delay: 3,
-                            unit: '%',
-                            show: 0,
-                            end: 100,
-                            onChange: (prevIndex, nextIndex) => {
-                                const nextAnime = sliderContainer.children[nextIndex];
-                                animeTitle.innerText = nextAnime.dataset.title;
-                                animeSynopsis.innerText = nextAnime.dataset.synopsis;
-                                animeInfo.style.display = 'block';
-                            }
-                        });
+        const searchInput = document.getElementById('search-input').value.trim();
+        const sliderContainer = document.getElementById('slider-container');
+        const animeInfo = document.getElementById('anime-info');
+        const animeTitle = document.getElementById('anime-title');
+        const animeSynopsis = document.getElementById('anime-synopsis');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        sliderContainer.innerHTML = '';
+        animeInfo.style.display = 'none';
 
-                        // Add event listeners to previous and next buttons.
-                        prevBtn.addEventListener('click', () => {
-                            slider.prev();
-                        });
-                        nextBtn.addEventListener('click', () => {
-                            slider.next();
-                        });
+        if (!searchInput) {
+            sliderContainer.innerHTML = '<p>Please enter a search term.</p>';
+            return;
+        }
 
-                        // Sets initial anime info.
-                        const firstAnime = sliderContainer.children[0];
-                        animeTitle.innerText = firstAnime.dataset.title;
-                        animeSynopsis.innerText = firstAnime.dataset.synopsis;
+        try {
+            const response = await fetch(`https://api.jikan.moe/v4/anime?q=${searchInput}&limit=9`);
+            const data = await response.json();
+
+            if (data.data && data.data.length > 0) {
+                data.data.forEach((anime, index) => {
+                    const animeItem = document.createElement('img');
+                    animeItem.src = anime.images.jpg.image_url;
+                    animeItem.alt = anime.title;
+                    animeItem.onclick = () => {
+                        window.open(`https://myanimelist.net/anime/${anime.mal_id}`, '_blank');
+                    };
+                    animeItem.dataset.index = index;
+                    animeItem.dataset.title = anime.title;
+                    animeItem.dataset.synopsis = anime.synopsis || 'No synopsis available.';
+
+                    sliderContainer.appendChild(animeItem);
+                });
+
+                // Initialize the Simple Slider functionality for the results.
+                // This makes the results automatically scroll every 3 seconds.
+                const slider = simpleslider.getSlider({
+                    container: sliderContainer,
+                    children: sliderContainer.children,
+                    duration: 1,
+                    delay: 3,
+                    unit: '%',
+                    show: 0,
+                    end: 100,
+                    onChange: (prevIndex, nextIndex) => {
+                        const nextAnime = sliderContainer.children[nextIndex];
+                        animeTitle.innerText = nextAnime.dataset.title;
+                        animeSynopsis.innerText = nextAnime.dataset.synopsis;
                         animeInfo.style.display = 'block';
-                    } else {
-                        sliderContainer.innerHTML = '<p>No results found.</p>';
                     }
-                } catch (error) {
-                    sliderContainer.innerHTML = '<p>An error occurred while searching for anime.</p>';
-                    console.error('Error:', error);
-                }
-            });
-        </script>
-    </body>
-    
+                });
+
+                // Add event listeners to previous and next buttons.
+                prevBtn.addEventListener('click', () => {
+                    slider.prev();
+                });
+                nextBtn.addEventListener('click', () => {
+                    slider.next();
+                });
+
+                // Sets initial anime info.
+                const firstAnime = sliderContainer.children[0];
+                animeTitle.innerText = firstAnime.dataset.title;
+                animeSynopsis.innerText = firstAnime.dataset.synopsis;
+                animeInfo.style.display = 'block';
+            } else {
+                sliderContainer.innerHTML = '<p>No results found.</p>';
+            }
+        } catch (error) {
+            sliderContainer.innerHTML = '<p>An error occurred while searching for anime.</p>';
+            console.error('Error:', error);
+        }
+    });
+</script>
+</body>
+</html>
