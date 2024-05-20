@@ -5,6 +5,7 @@ This website pulls data from MyAnimeList.net and allows users to access informat
 This website works on Chrome and iOS devices.
 
 Developer Manual: https://github.com/yonathancodes/INST377-Final-Group4/blob/main/DevManual.MD
+Vercel Link: https://inst-377-final-group4-git-main-yonathans-projects-b224379b.vercel.app/
 
 # Developer Manual
 
