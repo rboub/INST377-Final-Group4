@@ -30,6 +30,6 @@ https://api.jikan.moe/v4
 GET /anime: Search for anime.
 
 ## Known Bugs 
-Issue #1: Images may fail to load on certain browsers.
-Issue #2: Search functionality may not return accurate results in some cases.
-Issue #3: Search results may scroll too quickly for longer descriptions.
+1. Images may fail to load on certain browsers.
+2. Search functionality may not return accurate results in some cases.
+3. Search results may scroll too quickly for longer descriptions.
