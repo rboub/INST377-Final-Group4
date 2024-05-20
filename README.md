@@ -4,7 +4,7 @@
 This website pulls data from MyAnimeList.net and allows users to access information regarding various animes.
 This website works on Chrome and iOS devices.
 
-Developer Manual: 
+Developer Manual: https://github.com/yonathancodes/INST377-Final-Group4/blob/main/DevManual.MD
 
 # Developer Manual
 
