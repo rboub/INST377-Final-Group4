@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+    <head>
     <title>Anime Recommendation</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="animerec.css">
-</head>
+    </head>
 <body>
     <header>
         <h1>Anime Recommendation</h1>
@@ -42,6 +39,24 @@
         <div id="results">
             <!-- Anime recommendation cards will be displayed here -->
         </div>
+
+        <div id="audio" class="audio-controls">
+            <div class="audio-content">
+                <p>
+                    In this web page there are options to Navigate using Audio!<br>
+                    Ensure your Mic is enabled to be able to use this feature.
+                </p>
+                <ul>
+                    <li>Navigate to a Different Page<br>- Say: Navigate to &lt;page&gt;</li>
+                    <li>Change the Page Color<br>- Say: Change the color to &lt;color&gt;</li>
+                    <li>Say Hello Back to you!<br>- Say: Hello</li>
+                </ul>
+                <div class="audio-buttons">
+                    <button id="audioOn">Turn On Listening</button>
+                    <button id="audioOff">Turn Off Listening</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -54,7 +69,7 @@
         <p>Contact us: contact@animerecommendation.com</p>
     </footer>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <!-- Custom JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
     <script src="animerec.js"></script>
 </body>
 </html>
