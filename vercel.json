@@ -3,7 +3,8 @@
     "rewrites": [
       { "source": "/animerec", "destination": "/animerec.html" },
       { "source": "/search", "destination": "/search.html" },
-      { "source": "/about", "destination": "/about.html" }
+      { "source": "/about", "destination": "/about.html" },
+      { "source": "/index", "destination": "/index.html" }
     ]
   }
   
